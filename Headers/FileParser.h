@@ -1,5 +1,10 @@
 #pragma once
 
+/*
+ * This class API is not meant to be used by the user however it could be used for debuggin purposes, it is meant to be used
+ * by the Encryptor class to automate the file parsing work.
+ */
+
 #ifndef _FILE_PARSER_
 #define _FILE_PARSER_
 
@@ -22,7 +27,7 @@ public:
 
 	void parseFile(const std::string& filePath);
 
-	CharMap getCharMap() const;
+	inline CharMap getCharMap() const { return m_CapitalLowerMap; }
 
 private:
 	FileParser();
