@@ -9,11 +9,17 @@ FileParser& FileParser::Get()
 	return instance;
 }
 
-CharMapping FileParser::parseFile(const std::string& filePath)
+CharMap FileParser::getCharMap() const
+{
+	return m_CapitalLowerMap;
+}
+
+void FileParser::parseFile(const std::string& filePath)
 {
 	CharSize type = CharSize::NONE;
-	std::map<char, char> LowerResult;
-	std::map<char, char> CapitalResult;
+	std::unordered_map<char, char> LowerResult;
+	std::unordered_map<char, char> CapitalResult;
+	std::stringstream ss[2];
 	std::string line;
 
 	m_InputStream.open(filePath);
@@ -24,13 +30,29 @@ CharMapping FileParser::parseFile(const std::string& filePath)
 	{
 		while (std::getline(m_InputStream, line))
 		{
-			if (line.find("Capital"))
-				type = CharSize::Capital;
-			else if (line.find("Lower"))
-				type = CharSize::Lower;
+			if (line.find('#') != std::string::npos)
+			{
+				if (line.find("Capital") != std::string::npos)
+					type = CharSize::Capital;
+				else if (line.find("Lower") != std::string::npos)
+					type = CharSize::Lower;
+			}
+			else
+				ss[(int)type] << line << '\n';
 		}
 	}
 
+	while (std::getline(ss[0], line, '\n'))
+	{
+		CapitalResult[ line[0] ] = line[2];
+	}
+
+	while (std::getline(ss[1], line, '\n'))
+	{
+		LowerResult[line[0]] = line[2];
+	}
+
+	m_CapitalLowerMap = { LowerResult, CapitalResult};
 }
 
 FileParser::FileParser()

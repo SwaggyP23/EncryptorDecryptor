@@ -25,7 +25,7 @@ W d
 X c
 Y b
 Z a
-#Small
+#Lower
 a Z
 b Y
 c X

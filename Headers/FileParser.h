@@ -5,28 +5,32 @@
 
 #include <string>
 #include <fstream>
-#include <map>
+#include <unordered_map>
 
 #include "Log.h"
 
-struct CharMapping
+struct CharMap
 {
-	std::map<char, char> lowerMap;
-	std::map<char, char> capitalMap;
+	std::unordered_map<char, char> lowerMap;
+	std::unordered_map<char, char> capitalMap;
 };
 
 class FileParser
 {
+public:
 	static FileParser& Get();
-	CharMapping parseFile(const std::string& filePath);
+	void parseFile(const std::string& filePath);
+	CharMap getCharMap() const;
+
 
 private:
 	FileParser();
 	std::ifstream m_InputStream;
+	CharMap m_CapitalLowerMap;
 
 	enum class CharSize
 	{
-		NONE = 0,
+		NONE = -1,
 		Capital,
 		Lower
 	};
