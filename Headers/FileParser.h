@@ -19,9 +19,10 @@ class FileParser
 {
 public:
 	static FileParser& Get();
-	void parseFile(const std::string& filePath);
-	CharMap getCharMap() const;
 
+	void parseFile(const std::string& filePath);
+
+	CharMap getCharMap() const;
 
 private:
 	FileParser();
