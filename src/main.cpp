@@ -6,7 +6,8 @@
 
 int main()
 {
-	reda::Log::Init();
+	reda::Log::Init(); // Initializing the loggin library.
+
 	FileParser::Get().parseFile("res/Key.txt");
 
 	std::unordered_map<char, char> resC = FileParser::Get().getCharMap().capitalMap;
