@@ -19,8 +19,8 @@ public:
 private:
 	Encryptor();
 
-	static std::unordered_map<char, char> EcapCode;
-	static std::unordered_map<char, char> ElowCode;
+	static std::unordered_map<char, std::string> EcapCode;
+	static std::unordered_map<char, std::string> ElowCode;
 };
 
 #endif // _ENCRYPTOR_

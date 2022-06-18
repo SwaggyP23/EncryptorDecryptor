@@ -1,8 +1,8 @@
 #include "Encryptor.h"
-#include "FileParser.h"
+#include "StringParser.h"
 
-std::unordered_map<char, char> Encryptor::EcapCode;
-std::unordered_map<char, char> Encryptor::ElowCode;
+std::unordered_map<char, std::string> Encryptor::EcapCode;
+std::unordered_map<char, std::string> Encryptor::ElowCode;
 
 Encryptor::Encryptor()
 {
@@ -16,11 +16,11 @@ Encryptor& Encryptor::Get()
 
 void Encryptor::Init(const std::string& filePath)
 {
-	if (FileParser::Get().getCharMap().capitalMap.empty() && FileParser::Get().getCharMap().lowerMap.empty())
-		FileParser::Get().parseFile(filePath);
+	if (StringParser::Get().getCapMap().empty() && StringParser::Get().getLowMap().empty())
+		StringParser::Get().parseFile(filePath);
 
-	EcapCode = FileParser::Get().getCharMap().capitalMap;
-	ElowCode = FileParser::Get().getCharMap().lowerMap;
+	EcapCode = StringParser::Get().getCapMap();
+	ElowCode = StringParser::Get().getLowMap();
 }
 
 std::string Encryptor::EncryptMessage(const std::string& message) const
@@ -32,7 +32,7 @@ std::string Encryptor::EncryptMessage(const std::string& message) const
 		char temp = message[i];
 		if (EcapCode.contains(temp))
 		{
-			encryptResult.push_back(EcapCode.at(temp));
+			encryptResult += EcapCode.at(temp);
 
 			// This is one way to do things is to use iterators, but i already checked if the map contains `temp` therefore,
 			// no need to use find again which is in log time worst time complexity. Using the at function will not throw
@@ -42,7 +42,7 @@ std::string Encryptor::EncryptMessage(const std::string& message) const
 		}
 		else if (ElowCode.contains(temp))
 		{
-			encryptResult.push_back(ElowCode.at(temp));
+			encryptResult += ElowCode.at(temp);
 			
 			// Same comment as above
 			//std::unordered_map<char, char>::const_iterator it = lowCode.find(temp);

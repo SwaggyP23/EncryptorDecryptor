@@ -27,7 +27,7 @@ Y b
 Z a
   ;
 #Lower
-a Zaa
+a Z
 b Y
 c X
 d W

@@ -3,6 +3,7 @@
 /*
  * This class API is not meant to be used by the user however it could be used for debuggin purposes, it is meant to be used
  * by the Encryptor class to automate the file parsing work.
+ * This also was a first trial on parsing, and only parses the first character of the code not the whole thing.
  */
 
 #ifndef _FILE_PARSER_

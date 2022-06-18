@@ -1,19 +1,22 @@
-#include "TestingStringParser.h"
+#include "StringParser.h"
 
 #include <iostream>
 #include <sstream>
 
-TestingStringParser::TestingStringParser()
+std::unordered_map<char, std::string> StringParser::m_LowerMap;
+std::unordered_map<char, std::string> StringParser::m_CapitalMap;
+
+StringParser::StringParser()
 {
 }
 
-TestingStringParser& TestingStringParser::Get()
+StringParser& StringParser::Get()
 {
-	static TestingStringParser s_Instance;
+	static StringParser s_Instance;
 	return s_Instance;
 }
 
-void TestingStringParser::parseFile(const std::string& filePath)
+void StringParser::parseFile(const std::string& filePath)
 {
 	CharSize type = CharSize::NONE;
 	std::unordered_map<char, std::string> LowerResult;
@@ -43,17 +46,17 @@ void TestingStringParser::parseFile(const std::string& filePath)
 	while (std::getline(ss[0], line, '\n'))
 	{
 		std::string temp(line.begin() + 2, line.end());
-		LOG_INFO("{0}", temp);
+		//LOG_INFO("{0}", temp);
 		CapitalResult[line[0]] = temp;
 	}
 
 	while (std::getline(ss[1], line, '\n'))
 	{
 		std::string temp(line.begin() + 2, line.end());
-		LOG_INFO("{0}", temp);
+		//LOG_INFO("{0}", temp);
 		LowerResult[line[0]] = temp;
 	}
 
-	m_CapitalLowerMap.capitalMap = CapitalResult;
-	m_CapitalLowerMap.lowerMap = LowerResult;
+	m_CapitalMap = CapitalResult;
+	m_LowerMap = LowerResult;
 }

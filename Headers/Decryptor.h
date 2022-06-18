@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+ * TODO: make the Decryptor able to decrypt multiple characters into another one character.
+ */
+
 #ifndef _DECRYPTOR_
 #define _DECRYPTOR
 
@@ -19,8 +23,8 @@ public:
 private:
 	Decryptor();
 
-	static std::unordered_map<char, char> DcapCode;
-	static std::unordered_map<char, char> DlowCode;
+	static std::unordered_map<char, std::string> DcapCode;
+	static std::unordered_map<char, std::string> DlowCode;
 };
 
 #endif // _DECRYPTOR_
