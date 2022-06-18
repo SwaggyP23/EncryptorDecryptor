@@ -25,6 +25,7 @@ private:
 
 	static std::unordered_map<char, std::string> DcapCode;
 	static std::unordered_map<char, std::string> DlowCode;
+	static std::unordered_map<char, std::string> DAscCode;
 };
 
 #endif // _DECRYPTOR_

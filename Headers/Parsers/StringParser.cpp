@@ -5,6 +5,7 @@
 
 std::unordered_map<char, std::string> StringParser::m_LowerMap;
 std::unordered_map<char, std::string> StringParser::m_CapitalMap;
+std::unordered_map<char, std::string> StringParser::m_AscMap;
 
 StringParser::StringParser()
 {
@@ -19,10 +20,14 @@ StringParser& StringParser::Get()
 void StringParser::parseFile(const std::string& filePath)
 {
 	CharSize type = CharSize::NONE;
+
 	std::unordered_map<char, std::string> LowerResult;
 	std::unordered_map<char, std::string> CapitalResult;
-	std::stringstream ss[2];
+	std::unordered_map<char, std::string> ASCIIResult;
+
+	std::stringstream ss[3];
 	std::string line;
+
 	m_InputStream.open(filePath);
 
 	if (!m_InputStream.is_open())
@@ -37,6 +42,8 @@ void StringParser::parseFile(const std::string& filePath)
 					type = CharSize::Capital;
 				else if (line.find("Lower") != std::string::npos)
 					type = CharSize::Lower;
+				else if (line.find("ASCII") != std::string::npos)
+					type = CharSize::ASCII;
 			}
 			else
 				ss[(int)type] << line << '\n';
@@ -57,6 +64,14 @@ void StringParser::parseFile(const std::string& filePath)
 		LowerResult[line[0]] = temp;
 	}
 
+	while (std::getline(ss[2], line, '\n'))
+	{
+		std::string temp(line.begin() + 2, line.end());
+		//LOG_INFO("{0}", temp);
+		ASCIIResult[line[0]] = temp;
+	}
+
 	m_CapitalMap = CapitalResult;
 	m_LowerMap = LowerResult;
+	m_AscMap = ASCIIResult;
 }

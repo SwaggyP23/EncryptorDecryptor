@@ -21,6 +21,7 @@ private:
 
 	static std::unordered_map<char, std::string> EcapCode;
 	static std::unordered_map<char, std::string> ElowCode;
+	static std::unordered_map<char, std::string> EAscCode;
 };
 
 #endif // _ENCRYPTOR_

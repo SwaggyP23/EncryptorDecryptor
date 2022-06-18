@@ -1,8 +1,9 @@
 #include "Decryptor.h"
-#include "StringParser.h"
+#include "Parsers/StringParser.h"
 
 std::unordered_map<char, std::string> Decryptor::DcapCode;
 std::unordered_map<char, std::string> Decryptor::DlowCode;
+std::unordered_map<char, std::string> Decryptor::DAscCode;
 
 Decryptor::Decryptor()
 {
@@ -16,37 +17,46 @@ Decryptor& Decryptor::Get()
 
 void Decryptor::Init(const std::string& filePath)
 {
-	if (StringParser::Get().getCapMap().empty() && StringParser::Get().getLowMap().empty())
-		StringParser::Get().parseFile(filePath);
+	if (   StringParser::Get().getCapMap().empty() 
+		&& StringParser::Get().getLowMap().empty()
+		&& StringParser::Get().getAscMap().empty()
+		)
+			StringParser::Get().parseFile(filePath);
 
 	DcapCode = StringParser::Get().getCapMap();
 	DlowCode = StringParser::Get().getLowMap();
+	DAscCode = StringParser::Get().getAscMap();
 }
 
 std::string Decryptor::DecryptMessage(const std::string& message) const
 {
 	std::string DecryptedResult;
-
-	for (int i = 0; i < message.size(); i++)
+	
+	for (int i = 0; i < message.size(); i += 2)
 	{
-		char temp = message[i];
-		if (DcapCode.contains(temp))
+		std::string temp(&message[i], &message[i] + 2);
+		for (auto&[key, code] : DcapCode)
 		{
-			DecryptedResult += DcapCode.at(temp);
-
-			// This is one way to do things is to use iterators, but i already checked if the map contains `temp` therefore,
-			// no need to use find again which is in log time worst time complexity. Using the at function will not throw
-			// since i am sure that the temp value exists in this if statement since it is already checked in the condition
-			//std::unordered_map<char, char>::const_iterator it = capCode.find(temp);
-			//encryptResult.push_back(it->second);
+			if (code == temp) {
+				DecryptedResult += key;
+				break;
+			}
 		}
-		else if (DlowCode.contains(temp))
-		{
-			DecryptedResult += DlowCode.at(temp);
 
-			// Same comment as above
-			//std::unordered_map<char, char>::const_iterator it = lowCode.find(temp);
-			//encryptResult.push_back(it->second);
+		for (auto&[key, code] : DlowCode)
+		{
+			if (code == temp) {
+				DecryptedResult += key;
+				break;
+			}
+		}
+
+		for (auto&[key, code] : DAscCode)
+		{
+			if (code == temp) {
+				DecryptedResult += key;
+				break;
+			}
 		}
 	}
 
