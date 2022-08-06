@@ -14,8 +14,6 @@
 #include <fstream>
 #include <unordered_map>
 
-#include "Log.h"
-
 class StringParser
 {
 public:

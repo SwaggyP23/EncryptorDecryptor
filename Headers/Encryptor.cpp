@@ -32,7 +32,7 @@ std::string Encryptor::EncryptMessage(const std::string& message) const
 {
 	std::string encryptResult;
 
-	for (int i = 0; i < message.size(); i++)
+	for (unsigned int i = 0; i < message.size(); i++)
 	{
 		char temp = message[i];
 		if (EcapCode.contains(temp))

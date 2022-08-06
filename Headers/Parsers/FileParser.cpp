@@ -28,7 +28,7 @@ void FileParser::parseFile(const std::string& filePath)
 	m_InputStream.open(filePath);
 	
 	if (!m_InputStream.is_open())
-		CORE_LOG_ERROR("Could not open file");
+		std::cout << "Could not open file" << std::endl;
 	else
 	{
 		while (std::getline(m_InputStream, line))

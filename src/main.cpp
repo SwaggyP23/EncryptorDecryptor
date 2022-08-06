@@ -1,13 +1,21 @@
 #include "Decryptor.h"
 #include "Encryptor.h"
-#include "Log.h"
 
 #include <iostream>
 
+int foo(void) {
+	int joe = 1234, fred;
+	__asm {
+		mov eax, joe;
+		add eax, 2;
+		mov fred, eax;
+	};
+	return fred;
+}
+
 int main()
 {
-	reda::Log::Init(); // Initializing the loggin library.
-
+	std::cout << "Foo output: " << foo() << std::endl;
 	Encryptor::Init("res/Key.txt");
 	Decryptor::Init("res/Key.txt");
 
@@ -16,14 +24,14 @@ int main()
 	getline(std::cin, message);
 
 	std::string Encrypted = Encryptor::Get().EncryptMessage(message);
-	LOG_INFO("Encrypted message is: {0}", Encrypted);
+	std::cout << "Encrypted message is: " << Encrypted << std::endl;
 
 	char i;
-	std::cout << "Do u want to decrypt it? [Y/n]";
+	std::cout << "Do u want to decrypt it? [Y/n] ";
 	std::cin >> i;
 	if (i == 'Y') {
 		std::string origin = Decryptor::Get().DecryptMessage(Encrypted);
-		LOG_INFO("Original message is: {0}", origin);
+		std::cout << "Original message is: " << origin << std::endl;
 	}
 
 	std::cin.get();

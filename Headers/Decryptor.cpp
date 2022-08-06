@@ -32,7 +32,7 @@ std::string Decryptor::DecryptMessage(const std::string& message) const
 {
 	std::string DecryptedResult;
 	
-	for (int i = 0; i < message.size(); i += 2)
+	for (unsigned int i = 0; i < message.size(); i += 2)
 	{
 		std::string temp(&message[i], &message[i] + 2);
 		for (auto&[key, code] : DcapCode)

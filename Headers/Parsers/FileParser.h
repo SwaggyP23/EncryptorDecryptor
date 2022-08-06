@@ -13,8 +13,6 @@
 #include <fstream>
 #include <unordered_map>
 
-#include "Log.h"
-
 struct CharMap
 {
 	std::unordered_map<char, char> lowerMap;

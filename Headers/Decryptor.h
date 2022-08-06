@@ -1,9 +1,5 @@
 #pragma once
 
-/*
- * TODO: make the Decryptor able to decrypt multiple characters into another one character.
- */
-
 #ifndef _DECRYPTOR_
 #define _DECRYPTOR
 
@@ -29,4 +25,3 @@ private:
 };
 
 #endif // _DECRYPTOR_
-
